@@ -28,7 +28,7 @@ export class HomePage {
         this.downloadImaage(canvas);
       }
       else{
-        this.downloadImaage(canvas);
+        this.shareImage(canvas);
       }
 
 
@@ -44,6 +44,8 @@ export class HomePage {
     link.click();
   }
 
+
+  // ====== Share iamge (mobile) ======
   async shareImage(canvas: HTMLCanvasElement){
     let base64 = canvas.toDataURL();
     let path = 'qr.png'

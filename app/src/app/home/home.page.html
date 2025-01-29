@@ -19,6 +19,7 @@
   <div *ngIf="segment === 'scan'">
 
 
+
   </div>
   <div class="segment" *ngIf="segment === 'generate'">
     <div class="segment-content">
@@ -50,7 +51,7 @@
 
       <!-- ====== Share QR-->
        <ion-button (click)="captureScreen()" *ngIf="qrText"  class="submit ion-margin-top"  expand="block">
-        <ion-icon slot="start" name="share-social-outline">
+        <ion-icon slot="end" name="share-social-outline">
 
         </ion-icon>
         Share
