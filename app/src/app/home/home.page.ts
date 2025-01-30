@@ -6,7 +6,7 @@ import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { LensFacing, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
-
+import { Capacitor } from '@capacitor/core';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -78,9 +78,7 @@ export class HomePage implements OnInit {
 
     html2canvas(element).then((canvas: HTMLCanvasElement)=>{
 
-      console.log('Plataforma detectada: ', this.platform.is('capacitor'));
-
-      if(this.platform.is('capacitor')){
+      if (Capacitor.isNativePlatform()) {
         this.shareImage(canvas);
       }
       else {
