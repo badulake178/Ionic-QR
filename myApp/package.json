@@ -13,7 +13,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^19.0.0",
     "@capacitor/app": "7.0.0",
     "@capacitor/core": "7.0.1",
     "@capacitor/haptics": "7.0.0",
@@ -23,17 +22,14 @@
     "@ionic/angular-server": "^7.8.6",
     "@ionic/core": "^7.8.6",
     "ionicons": "^7.0.0",
-    "rxjs": "^7.5.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.0.0",
     "@angular-eslint/builder": "^19.0.0",
     "@angular-eslint/eslint-plugin": "^19.0.0",
     "@angular-eslint/eslint-plugin-template": "^19.0.0",
     "@angular-eslint/schematics": "^19.0.0",
     "@angular-eslint/template-parser": "^19.0.0",
-    "@angular/language-service": "^19.0.0",
     "@capacitor/cli": "7.0.1",
     "@ionic/angular-toolkit": "^9.0.0",
     "@types/jasmine": "~5.1.0",
@@ -49,8 +45,7 @@
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "5.4"
+    "karma-jasmine-html-reporter": "~2.1.0"
   },
   "description": "An Ionic project"
 }
