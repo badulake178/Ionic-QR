@@ -34,7 +34,12 @@ import { Torch } from '@capawesome/capacitor-torch';
 
     <ion-content>
       <div #square class="square"></div>
-      <ion-fab *ngIf="isTorchAvailable" slot="fixed" horizontal="end" vertical="bottom">
+      <ion-fab
+      *ngIf="isTorchAvailable"
+      slot="fixed"
+      horizontal="end"
+       vertical="bottom">
+
         <ion-fab-button (click)="toggleTorch()">
           <ion-icon name="flashlight"></ion-icon>
         </ion-fab-button>
@@ -95,7 +100,7 @@ export class BarcodeScanningModalComponent implements OnInit, AfterViewInit, OnD
   }
 
   private async startScan(): Promise<void> {
-    document.querySelector('body')?.classList.add('barcode-scanner-active');
+    document.querySelector('body')?.classList.add('barcode-scanning-active');
 
     this.listener = BarcodeScanner.addListener('barcodesScanned', async (event: BarcodesScannedEvent) => {
       this.ngZone.run(() => {
@@ -108,7 +113,7 @@ export class BarcodeScanningModalComponent implements OnInit, AfterViewInit, OnD
   }
 
   private async stopScan(): Promise<void> {
-    document.querySelector('body')?.classList.remove('barcode-scanner-active');
+    document.querySelector('body')?.classList.remove('barcode-scanning-active');
     await BarcodeScanner.removeAllListeners();
     await BarcodeScanner.stopScan();
   }

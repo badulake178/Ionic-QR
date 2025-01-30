@@ -78,6 +78,8 @@ export class HomePage implements OnInit {
 
     html2canvas(element).then((canvas: HTMLCanvasElement)=>{
 
+      console.log('Plataforma detectada: ', this.platform.is('capacitor'));
+
       if(this.platform.is('capacitor')){
         this.shareImage(canvas);
       }
@@ -104,17 +106,19 @@ export class HomePage implements OnInit {
     let path = 'qr.png';
 
     const loading = await this.loadingController.create({spinner: 'crescent', });
+
     await loading.present();
 
     await Filesystem.writeFile({
       path,
       data: base64,
-      directory: Directory.Documents
+      directory: Directory.Cache
     }).then(async (res)=>{
+
+
       let uri = res.uri;
-      await Share.share({
-        url: uri
-      });
+
+      await Share.share({url: uri});
 
       await Filesystem.deleteFile({
         path,

@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-padding" [translucent]="true">
   <ion-toolbar>
     <ion-title>
       QR App
@@ -31,7 +31,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="6">
-          <ion-button class="submit" expand="block">
+          <ion-button (click)="readBarcodeFromImage()" class="submit" expand="block">
             Select<ion-icon slot="end" name="image-outline"></ion-icon>
           </ion-button>
         </ion-col>
