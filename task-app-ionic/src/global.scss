@@ -63,3 +63,20 @@ h1{
 ion-item{
   --background: transparent;
 }
+
+.validators{
+  font-size: 14px;
+  color:var(--ion-color-danger);
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+ion-button{
+  text-transform: capitalize;
+}
+
+.d-flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
