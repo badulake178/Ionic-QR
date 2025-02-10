@@ -9,6 +9,7 @@
     <div class="d-flex-center">
       <form (keyup.enter)="submit()" (ngSubmit)="submit()" class="ion-text-center">
         <app-custom-input
+        autocomplete="email"
         [control]="form.controls.email"
         type="email"
         label="Correo"
@@ -39,7 +40,7 @@
           <div>
             ¿No tienes cuentas?
           </div>
-          <ion-button class="ion-margin-vertical">
+          <ion-button routerLink="sign-up" class="ion-margin-vertical">
             Regístrate
             <ion-icon slot="end" name="person-add-outline"></ion-icon>
           </ion-button>
