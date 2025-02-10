@@ -40,8 +40,8 @@ export class SignUpPage implements OnInit {
     submit()
     {
       if(this.form.valid){
-        this.firebaseSvc.signUp(this.form.value as User).then(res=>{
-          console.log(res);
+        this.firebaseSvc.signUp(this.form.value as User).then(async res=>{
+          await this.firebaseSvc.updateUser({displayName: this.form.value.name});
         }, error=>{
           alert(error)
         });
