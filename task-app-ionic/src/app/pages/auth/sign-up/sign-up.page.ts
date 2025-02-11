@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { CustomValidators } from 'src/app/utils/custom-validators';
 @Component({
   standalone: false,
@@ -19,7 +20,8 @@ export class SignUpPage implements OnInit {
     });
 
     constructor(
-      private firebaseSvc: FirebaseService
+      private firebaseSvc: FirebaseService,
+      private utilsSvc: UtilsService
     ) {
 
     }
@@ -40,10 +42,42 @@ export class SignUpPage implements OnInit {
     submit()
     {
       if(this.form.valid){
+
+        this.utilsSvc.presentLoading({message: 'Registrando...'})
         this.firebaseSvc.signUp(this.form.value as User).then(async res=>{
+
           await this.firebaseSvc.updateUser({displayName: this.form.value.name});
+
+          let user: User = {
+            id: res.user.uid,
+            name: res.user.displayName,
+            email: res.user.email
+          }
+
+          this.utilsSvc.setElementInLocalstorage('user', user);
+          this.utilsSvc.routerLink('/tabs');
+
+          this.utilsSvc.dismissLoading();
+
+          this.utilsSvc.presentToast({
+            message: `Te damos la bienvenida ${user.name}`,
+            duration: 1500,
+            color: 'primary',
+            icon: 'person-outline'
+          })
+
+
         }, error=>{
-          alert(error)
+          this.utilsSvc.dismissLoading();
+          this.utilsSvc.presentToast({
+            message: error,
+            duration: 5000,
+            color: 'warning',
+            icon: 'alert-circle-outline'
+          })
+
+
+
         });
 
       }
