@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   standalone: false,
@@ -14,18 +17,56 @@ export class AuthPage implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  constructor() { }
+  constructor(
+    private firebaseSvc: FirebaseService,
+    private utilsSvc: UtilsService
+  ) { }
 
   ngOnInit() {
   }
 
   submit()
-  {
-    console.log(this.form.value);
-    if(this.form.valid){
-      console.log(this.form.value);
+      {
+        if(this.form.valid){
 
-    }
-  }
+          this.utilsSvc.presentLoading({message: 'Verificando...'})
+          this.firebaseSvc.login(this.form.value as User).then(async res=>{
+
+            let user: User = {
+              id: res.user.uid,
+              name: res.user.displayName,
+              email: res.user.email
+            }
+
+            this.utilsSvc.setElementInLocalstorage('user', user);
+            this.utilsSvc.routerLink('/tabs/home');
+
+            this.utilsSvc.dismissLoading();
+
+            this.utilsSvc.presentToast({
+              message: `Te damos la bienvenida ${user.name}`,
+              duration: 1500,
+              color: 'primary',
+              icon: 'person-outline'
+            })
+
+            this.form.reset();
+
+
+          }, error=>{
+            this.utilsSvc.dismissLoading();
+            this.utilsSvc.presentToast({
+              message: error,
+              duration: 5000,
+              color: 'warning',
+              icon: 'alert-circle-outline'
+            })
+
+
+
+          });
+
+        }
+      }
 
 }
