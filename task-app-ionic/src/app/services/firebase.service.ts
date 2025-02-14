@@ -40,4 +40,6 @@ export class FirebaseService {
   }
 
 
+  // ============ Firestore (Base de datos) ================
+
 }
