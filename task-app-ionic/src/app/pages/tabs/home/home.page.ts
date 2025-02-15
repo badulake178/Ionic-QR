@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
+import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateTaskComponent } from 'src/app/shared/components/add-update-task/add-update-task.component';
@@ -12,49 +13,16 @@ import { AddUpdateTaskComponent } from 'src/app/shared/components/add-update-tas
 })
 export class HomePage implements OnInit {
 
-  tasks: Task[] = [
-    {
-      id: "1",
-      title: 'Autenticacion con google',
-      description: 'Esta es una tarea de autenticacion con google',
-      items: [
-        { name: 'Actividad 1', completed: true},
-        { name: 'Actividad 2', completed: false},
-        { name: 'Actividad 3', completed: false}
-      ]
-
-    },
-    {
-      id: "2",
-      title: 'Autenticacion con google',
-      description: 'Esta es una tarea de autenticacion con google',
-      items: [
-        { name: 'Actividad 1', completed: true},
-        { name: 'Actividad 2', completed: true},
-        { name: 'Actividad 3', completed: false}
-      ]
-
-    },
-    {
-      id: "3",
-      title: 'Autenticacion con google',
-      description: 'Esta es una tarea de autenticacion con google',
-      items: [
-        { name: 'Actividad 1', completed: true},
-        { name: 'Actividad 2', completed: true},
-        { name: 'Actividad 3', completed: true}
-      ]
-
-    },
-  ]
+  tasks: Task[] = []
 
   constructor(
     private firebaseSvc: FirebaseService,
-    private utilsSvc: UtilsService
-  ) { }
+    private utilsSvc: UtilsService) {}
 
-  ngOnInit() {
-    this.addOrUpdateTask(this.tasks[0])
+  ngOnInit() { }
+
+  ionViewWillEnter(){
+    this.getTasks()
   }
 
   getPercentage(task: Task){
@@ -68,6 +36,26 @@ export class HomePage implements OnInit {
       cssClass: 'add-update-modal',
     })
 
+  }
+
+  getTasks(){
+    let user:User = this.utilsSvc.getElementFromLocalStorage('user');
+    //console.log(user);
+
+    let path = `users/${user.id}`
+    let sub = this.firebaseSvc.getSubcollection(path, 'tasks').subscribe(
+      {
+        next: (res: Task[])=> {
+        console.log(res);
+        this.tasks = res
+        sub.unsubscribe();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    }
+
+    );
   }
 
 }
