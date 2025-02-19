@@ -5,6 +5,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemReorderEventDetail } from '@ionic/angular';
+
 @Component({
   standalone: false,
   selector: 'app-add-update-task',
