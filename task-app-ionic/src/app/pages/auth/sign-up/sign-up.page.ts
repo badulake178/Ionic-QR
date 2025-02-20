@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.model';
+import { Local, User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { CustomValidators } from 'src/app/utils/custom-validators';
@@ -12,11 +12,16 @@ import { CustomValidators } from 'src/app/utils/custom-validators';
 })
 export class SignUpPage implements OnInit {
 
+  caletas: Local[] = [
+    {id: "1", name: 'Caleta 1', comuna: 'Lota', provincia: 'Concepcion', region: 'VIII Region - Concepcion'}
+  ]
+
   form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(4)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('')
+      confirmPassword: new FormControl(''),
+      loca: new FormControl(this.caletas[0])
     });
 
     constructor(
@@ -43,15 +48,19 @@ export class SignUpPage implements OnInit {
     {
       if(this.form.valid){
 
+
+
         this.utilsSvc.presentLoading({message: 'Registrando...'})
         this.firebaseSvc.signUp(this.form.value as User).then(async res=>{
 
-          await this.firebaseSvc.updateUser({displayName: this.form.value.name});
+
+          await this.firebaseSvc.updateUser({displayName: this.form.value.name, ubicacion: JSON.stringify(this.form.value.loca) });
 
           let user: User = {
             id: res.user.uid,
             name: res.user.displayName,
-            email: res.user.email
+            email: res.user.email,
+            ubicacion: this.form.value.loca
           }
 
           this.utilsSvc.setElementInLocalstorage('user', user);

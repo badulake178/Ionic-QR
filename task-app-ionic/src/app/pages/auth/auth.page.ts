@@ -32,10 +32,14 @@ export class AuthPage implements OnInit {
           this.utilsSvc.presentLoading({message: 'Verificando...'})
           this.firebaseSvc.login(this.form.value as User).then(async res=>{
 
+            console.log(this.form.value);
+
             let user: User = {
               id: res.user.uid,
               name: res.user.displayName,
               email: res.user.email
+
+
             }
 
             this.utilsSvc.setElementInLocalstorage('user', user);
